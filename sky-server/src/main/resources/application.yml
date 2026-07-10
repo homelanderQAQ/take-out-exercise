@@ -1,0 +1,37 @@
+server:
+  port: 8081
+
+spring:
+  profiles:
+    active: dev    # 引用 application-dev.yml
+  main:
+    allow-circular-references: true   # ?? Bean ??????
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+  datasource:
+    druid:
+      driver-class-name: ${homelander.datasource.driver-class-name}
+      # ${...}????????? sky: ?????
+      url: jdbc:mysql://${homelander.datasource.host}:${homelander.datasource.port}/${homelander.datasource.database}?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&useSSL=false
+      username: ${homelander.datasource.username}
+      password: ${homelander.datasource.password}
+
+mybatis:
+  mapper-locations: classpath:mapper/*.xml  # Mapper XML 位置
+  type-aliases-package: com.homelander.entity  # 实体类别名
+  configuration:
+    map-underscore-to-camel-case: true # 将下划线转换为驼峰命名
+
+logging:
+  level:
+    com.homelander.mapper: debug
+    com.homelander.service: info
+    com.homelander.controller: info
+
+
+homelander:
+  jwt:
+    admin-secret-key: homelander   # 设置jwt签名加密时使用的秘钥
+    admin-ttl: 7200000             # 设置jwt过期时间
+    admin-token-name: token        # 设置前端传递过来的令牌名称

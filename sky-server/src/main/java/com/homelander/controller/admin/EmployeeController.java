@@ -1,0 +1,62 @@
+package com.homelander.controller.admin;
+
+import com.homelander.dto.EmployeeLoginDTO;
+import com.homelander.entity.Employee;
+import com.homelander.result.Result;
+import com.homelander.service.EmployeeService;
+import com.homelander.vo.EmployeeLoginVO;
+import io.swagger.annotations.Api;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+/**
+ * ClassName:EmployeeController
+ * Package:com.homelander.controller.admin
+ * Description:
+ *
+ * @Author Heisenberg
+ * @Create 2026/7/10 17:35
+ * @Version 1.0
+ */
+@RestController //@RestController = @Controller + @ResponseBody
+@RequestMapping("/admin/employee")
+@Slf4j
+@Api(tags = "员工相关接口")
+public class EmployeeController {
+    @Autowired
+    private static EmployeeService employeeService;
+
+
+    /**
+     * 登录业务接口
+     * @param employeeLoginDTO 接收用户名和密码
+     * @return  Result<EmployeeLoginVO> 用Resutl封装的用户信息数据其中只有 id,name,username,token数据
+     */
+    @PostMapping("/login")
+    public Result<EmployeeLoginVO> login(@RequestBody EmployeeLoginDTO employeeLoginDTO){
+        // 1.打印日志
+        log.info("员工登录:{}",employeeLoginDTO);
+
+        // 2. 调用 employeeService.login(employeeLoginDTO)
+        Employee employee = employeeService.login(employeeLoginDTO);
+
+        // 3. 生成 JWT（先略过，第六阶段做）
+        // TODO
+
+
+        // 4. 组装 EmployeeLoginVO 返回
+        EmployeeLoginVO employeeLoginVO =EmployeeLoginVO.builder()
+                .id(employee.getId())
+                .name(employee.getName())
+                .username(employee.getUsername())
+                .token(null)
+                .build();
+
+
+        return Result.success(employeeLoginVO);
+    }
+}
