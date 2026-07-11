@@ -1,9 +1,7 @@
 package com.homelander.service.impl;
 
 import com.homelander.constant.MessageConstant;
-import com.homelander.constant.PasswordConstant;
 import com.homelander.constant.StatusConstant;
-import com.homelander.dto.EmployeeDTO;
 import com.homelander.dto.EmployeeLoginDTO;
 import com.homelander.entity.Employee;
 import com.homelander.exception.AccountLockedException;
@@ -12,12 +10,9 @@ import com.homelander.exception.PasswordErrorException;
 import com.homelander.mapper.EmployeeMapper;
 import com.homelander.service.EmployeeService;
 import com.homelander.vo.EmployeeLoginVO;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
-
-import java.time.LocalDateTime;
 
 /**
  * ClassName:EmployeeServiceImpl 服务层业务实现
@@ -33,11 +28,6 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Autowired
     private static EmployeeMapper employeeMapper;
 
-    /**
-     * 登录业务
-     * @param employeeLoginDTO
-     * @return
-     */
     @Override
     public Employee login(EmployeeLoginDTO employeeLoginDTO) {
         String username = employeeLoginDTO.getUsername();
@@ -65,34 +55,5 @@ public class EmployeeServiceImpl implements EmployeeService {
 
         // 6. 全部通过 → 返回 Employee 对象
         return employee;
-    }
-
-    /**
-     * 新增员工业务
-     * @param employeeDTO
-     */
-    @Override
-    public void save(EmployeeDTO employeeDTO) {
-        //1. `BeanUtils.copyProperties(dto, employee)` 拷贝属性
-        Employee employee = new Employee();
-        BeanUtils.copyProperties(employeeDTO,employee);
-
-        //2. 设置默认状态为启用（1）
-        employee.setStatus(StatusConstant.ENABLE);
-
-        //3. 设置默认密码为 `123456` 的 MD5 值
-        // TODO 前端用户输入的密码设置进去
-        employee.setPassword(DigestUtils.md5DigestAsHex(PasswordConstant.DEFAULT_PASSWORD.getBytes()));
-
-        //4.设置修改时间和修改人id
-        // TODO 后期需要改为当前登录用户的id
-        employee.setCreateTime(LocalDateTime.now());
-        employee.setUpdateTime(LocalDateTime.now());
-        employee.setCreateUser(10L);
-        employee.setUpdateUser(10L);
-
-        //5. 调用 `employeeMapper.insert(employee)`
-        employeeMapper.insert(employee);
-
     }
 }
