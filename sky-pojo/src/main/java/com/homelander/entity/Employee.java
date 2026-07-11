@@ -1,6 +1,7 @@
 package com.homelander.entity;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -17,6 +18,7 @@ import java.time.LocalDateTime;
  * @Create 2026/7/10 15:37
  * @Version 1.0
  */
+@Builder
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
