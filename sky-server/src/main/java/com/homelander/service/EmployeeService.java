@@ -2,7 +2,9 @@ package com.homelander.service;
 
 import com.homelander.dto.EmployeeDTO;
 import com.homelander.dto.EmployeeLoginDTO;
+import com.homelander.dto.EmployeePageQueryDTO;
 import com.homelander.entity.Employee;
+import com.homelander.result.PageResult;
 import com.homelander.vo.EmployeeLoginVO;
 
 /**
@@ -29,4 +31,11 @@ public interface EmployeeService {
      * @param employeeDTO
      */
     void save(EmployeeDTO employeeDTO);
+
+    /**
+     * 分页查询服务层方法
+     * @param employeePageQueryDTO name、page、pagesize
+     * @return
+     */
+    PageResult pageQuery(EmployeePageQueryDTO employeePageQueryDTO);
 }

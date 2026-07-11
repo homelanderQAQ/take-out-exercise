@@ -2,17 +2,16 @@ package com.homelander.controller.admin;
 
 import com.homelander.dto.EmployeeDTO;
 import com.homelander.dto.EmployeeLoginDTO;
+import com.homelander.dto.EmployeePageQueryDTO;
 import com.homelander.entity.Employee;
+import com.homelander.result.PageResult;
 import com.homelander.result.Result;
 import com.homelander.service.EmployeeService;
 import com.homelander.vo.EmployeeLoginVO;
 import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * ClassName:EmployeeController
@@ -83,5 +82,18 @@ public class EmployeeController {
         return Result.success();
     }
 
+    /**
+     * 分页查询控制层方法
+     * @param employeePageQueryDTO
+     * @return
+     */
+    @GetMapping("/page")
+    //请求参数不加 @RequestBody
+    public Result<PageResult> page(EmployeePageQueryDTO employeePageQueryDTO){
+        log.info("员工分页查询,参数为：{}",employeePageQueryDTO);
+        PageResult pageResult = employeeService.pageQuery(employeePageQueryDTO);
+        return Result.success(pageResult);
 
+
+    }
 }

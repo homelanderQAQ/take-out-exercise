@@ -1,15 +1,19 @@
 package com.homelander.service.impl;
 
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import com.homelander.constant.MessageConstant;
 import com.homelander.constant.PasswordConstant;
 import com.homelander.constant.StatusConstant;
 import com.homelander.dto.EmployeeDTO;
 import com.homelander.dto.EmployeeLoginDTO;
+import com.homelander.dto.EmployeePageQueryDTO;
 import com.homelander.entity.Employee;
 import com.homelander.exception.AccountLockedException;
 import com.homelander.exception.AccountNotFoundException;
 import com.homelander.exception.PasswordErrorException;
 import com.homelander.mapper.EmployeeMapper;
+import com.homelander.result.PageResult;
 import com.homelander.service.EmployeeService;
 import com.homelander.vo.EmployeeLoginVO;
 import org.springframework.beans.BeanUtils;
@@ -18,6 +22,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * ClassName:EmployeeServiceImpl 服务层业务实现
@@ -94,5 +99,24 @@ public class EmployeeServiceImpl implements EmployeeService {
         //5. 调用 `employeeMapper.insert(employee)`
         employeeMapper.insert(employee);
 
+    }
+
+    /**
+     * 分页查询实现代码
+     * @param employeePageQueryDTO name、page、pagesize
+     * @return
+     */
+    @Override
+    public PageResult pageQuery(EmployeePageQueryDTO employeePageQueryDTO) {
+        //1. `PageHelper.startPage(dto.getPage(), dto.getPageSize())` 开启分页
+        PageHelper.startPage(employeePageQueryDTO.getPage(),employeePageQueryDTO.getPageSize());
+
+        //2. 调用 `employeeMapper.pageQuery(dto)` 得到 `Page<Employee>`
+        Page<Employee> page = employeeMapper.pageQuery(employeePageQueryDTO);
+        long total = page.getTotal();
+        List<Employee> records = page.getResult();
+
+        //3. `new PageResult(page.getTotal(), page.getResult())` 返回
+        return new PageResult(total,records);
     }
 }
