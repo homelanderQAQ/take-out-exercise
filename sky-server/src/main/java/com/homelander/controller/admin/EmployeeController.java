@@ -1,5 +1,6 @@
 package com.homelander.controller.admin;
 
+import com.homelander.dto.EmployeeDTO;
 import com.homelander.dto.EmployeeLoginDTO;
 import com.homelander.entity.Employee;
 import com.homelander.result.Result;
@@ -55,8 +56,32 @@ public class EmployeeController {
                 .username(employee.getUsername())
                 .token(null)
                 .build();
-
-
         return Result.success(employeeLoginVO);
     }
+
+    /**
+     * 推出业务代码
+     * @return
+     */
+    @PostMapping("/logout")
+    public Result<String> logout(){
+        return Result.success();
+    }
+
+    /**
+     * 新增员工控制层方法
+     * @param employeeDTO
+     * @return
+     */
+    @PostMapping("/save")
+    public Result save(@RequestBody EmployeeDTO employeeDTO){
+        // 1.打印日志
+        log.info("新增员工：{}",employeeDTO);
+        // 2.调用服务层的方法
+        employeeService.save(employeeDTO);
+        // 3 return Result.success()
+        return Result.success();
+    }
+
+
 }
