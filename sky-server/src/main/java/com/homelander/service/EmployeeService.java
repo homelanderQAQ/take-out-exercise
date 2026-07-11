@@ -1,5 +1,6 @@
 package com.homelander.service;
 
+import com.homelander.dto.EmployeeDTO;
 import com.homelander.dto.EmployeeLoginDTO;
 import com.homelander.entity.Employee;
 import com.homelander.vo.EmployeeLoginVO;
@@ -22,4 +23,10 @@ public interface EmployeeService {
      * @return
      */
     Employee login(EmployeeLoginDTO employeeLoginDTO);
+
+    /**
+     * 新增员工服务层方法
+     * @param employeeDTO
+     */
+    void save(EmployeeDTO employeeDTO);
 }
