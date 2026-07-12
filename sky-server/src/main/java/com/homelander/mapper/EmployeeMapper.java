@@ -1,8 +1,10 @@
 package com.homelander.mapper;
 
 import com.github.pagehelper.Page;
+import com.homelander.annotation.AutoFill;
 import com.homelander.dto.EmployeePageQueryDTO;
 import com.homelander.entity.Employee;
+import com.homelander.enumeration.OperationType;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
@@ -38,6 +40,7 @@ public interface EmployeeMapper {
      * 添加用户
      * @param employee 用户employee对象
      */
+    @AutoFill(value = OperationType.INSERT)
     @Insert("insert into sky_take_out.employee (name, username, password, phone, sex, id_number, create_time, update_time, create_user, update_user) " +
             "values " +
             "(#{name},#{username},#{password},#{phone},#{sex},#{idNumber},#{createTime},#{updateTime},#{createUser},#{updateUser})")
@@ -48,6 +51,7 @@ public interface EmployeeMapper {
      * 根据用户id动态更新用户数据
      * @param employee
      */
+    @AutoFill(value = OperationType.UPDATE)
     void update(Employee employee);
 
     /**

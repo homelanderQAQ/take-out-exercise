@@ -78,7 +78,6 @@ public class EmployeeServiceImpl implements EmployeeService {
      * 新增员工业务
      * @param employeeDTO
      */
-    @AutoFill(value = OperationType.INSERT)
     @Override
     public void save(EmployeeDTO employeeDTO) {
         //1. `BeanUtils.copyProperties(dto, employee)` 拷贝属性
@@ -126,7 +125,6 @@ public class EmployeeServiceImpl implements EmployeeService {
      * @param status
      * @param id
      */
-    @AutoFill(value = OperationType.UPDATE)
     @Override
     public void startOrStop(Integer status, Long id) {
         // update employee set status = ? where id = ?
@@ -157,7 +155,6 @@ public class EmployeeServiceImpl implements EmployeeService {
      * @param employeeDTO
      */
     @Override
-    @AutoFill(value = OperationType.UPDATE)
     public void update(EmployeeDTO employeeDTO) {
         Employee employee = new Employee();
         BeanUtils.copyProperties(employeeDTO,employee);

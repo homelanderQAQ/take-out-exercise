@@ -1,6 +1,11 @@
 package com.homelander.service;
 
 import com.homelander.dto.DishDTO;
+import com.homelander.dto.DishPageQueryDTO;
+import com.homelander.result.PageResult;
+import com.homelander.vo.DishVO;
+
+import java.util.List;
 
 /**
  * ClassName:DishService
@@ -17,4 +22,30 @@ public interface DishService {
      * @param dishDTO
      */
     void saveWithFlavor(DishDTO dishDTO);
+
+    /**
+     * 菜品分页查询
+     * @param dishPageQueryDTO
+     * @return
+     */
+    PageResult pageQuery(DishPageQueryDTO dishPageQueryDTO);
+
+    /**
+     * 菜品批量删除
+     * @param ids
+     */
+    void deleteBatch(List<Long> ids);
+
+    /**
+     * 根据id查询菜品信息
+     * @param id
+     * @return
+     */
+    DishVO getByIdWithFlavor(Long id);
+
+    /**
+     * 更新菜单
+     * @param dishDTO
+     */
+    void updateWithFlavor(DishDTO dishDTO);
 }

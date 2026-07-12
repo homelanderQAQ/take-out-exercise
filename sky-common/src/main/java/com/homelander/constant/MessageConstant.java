@@ -16,4 +16,6 @@ public class MessageConstant {
     public static final String ACCOUNT_LOCKED = "账号被锁定";
     public static final String UNKNOWN_ERROR = "未知错误";
 
+    public static final String DISH_NO_SALE = "菜品在售";
+    public static final String DISH_BE_RELATED_BY_SETMEAL = "菜品已被套餐关联";
 }
