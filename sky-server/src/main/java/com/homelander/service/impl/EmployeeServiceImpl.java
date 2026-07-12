@@ -2,6 +2,7 @@ package com.homelander.service.impl;
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import com.homelander.annotation.AutoFill;
 import com.homelander.constant.MessageConstant;
 import com.homelander.constant.PasswordConstant;
 import com.homelander.constant.StatusConstant;
@@ -9,6 +10,7 @@ import com.homelander.dto.EmployeeDTO;
 import com.homelander.dto.EmployeeLoginDTO;
 import com.homelander.dto.EmployeePageQueryDTO;
 import com.homelander.entity.Employee;
+import com.homelander.enumeration.OperationType;
 import com.homelander.exception.AccountLockedException;
 import com.homelander.exception.AccountNotFoundException;
 import com.homelander.exception.PasswordErrorException;
@@ -76,6 +78,7 @@ public class EmployeeServiceImpl implements EmployeeService {
      * 新增员工业务
      * @param employeeDTO
      */
+    @AutoFill(value = OperationType.INSERT)
     @Override
     public void save(EmployeeDTO employeeDTO) {
         //1. `BeanUtils.copyProperties(dto, employee)` 拷贝属性
@@ -86,15 +89,13 @@ public class EmployeeServiceImpl implements EmployeeService {
         employee.setStatus(StatusConstant.ENABLE);
 
         //3. 设置默认密码为 `123456` 的 MD5 值
-        // TODO 前端用户输入的密码设置进去
         employee.setPassword(DigestUtils.md5DigestAsHex(PasswordConstant.DEFAULT_PASSWORD.getBytes()));
 
-        //4.设置修改时间和修改人id
-        // TODO 后期需要改为当前登录用户的id
+       /* //4.设置修改时间和修改人id
         employee.setCreateTime(LocalDateTime.now());
         employee.setUpdateTime(LocalDateTime.now());
         employee.setCreateUser(10L);
-        employee.setUpdateUser(10L);
+        employee.setUpdateUser(10L);*/
 
         //5. 调用 `employeeMapper.insert(employee)`
         employeeMapper.insert(employee);
@@ -125,6 +126,7 @@ public class EmployeeServiceImpl implements EmployeeService {
      * @param status
      * @param id
      */
+    @AutoFill(value = OperationType.UPDATE)
     @Override
     public void startOrStop(Integer status, Long id) {
         // update employee set status = ? where id = ?
@@ -133,8 +135,8 @@ public class EmployeeServiceImpl implements EmployeeService {
                 .id(id)
                 .build();
 
-        employee.setUpdateTime(LocalDateTime.now());
-        employee.setUpdateUser(10L);
+        /*employee.setUpdateTime(LocalDateTime.now());
+        employee.setUpdateUser(10L);*/
 
         employeeMapper.update(employee);
     }
@@ -151,16 +153,17 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     /**
-     *
+     * 更新用户信息
      * @param employeeDTO
      */
     @Override
+    @AutoFill(value = OperationType.UPDATE)
     public void update(EmployeeDTO employeeDTO) {
         Employee employee = new Employee();
         BeanUtils.copyProperties(employeeDTO,employee);
 
-        employee.setUpdateTime(LocalDateTime.now());
-        employee.setUpdateUser(10L);
+       /* employee.setUpdateTime(LocalDateTime.now());
+        employee.setUpdateUser(10L);*/
 
         employeeMapper.update(employee);
     }

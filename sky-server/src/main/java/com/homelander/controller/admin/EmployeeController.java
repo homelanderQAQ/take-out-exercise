@@ -1,17 +1,23 @@
 package com.homelander.controller.admin;
 
+import com.homelander.constant.JwtClaimsConstant;
 import com.homelander.dto.EmployeeDTO;
 import com.homelander.dto.EmployeeLoginDTO;
 import com.homelander.dto.EmployeePageQueryDTO;
 import com.homelander.entity.Employee;
+import com.homelander.properties.JwtProperties;
 import com.homelander.result.PageResult;
 import com.homelander.result.Result;
 import com.homelander.service.EmployeeService;
+import com.homelander.utils.JwtUtil;
 import com.homelander.vo.EmployeeLoginVO;
 import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * ClassName:EmployeeController
@@ -30,6 +36,8 @@ public class EmployeeController {
     @Autowired
     private static EmployeeService employeeService;
 
+    @Autowired
+    private JwtProperties jwtProperties;
 
     /**
      * 登录业务接口
@@ -46,6 +54,12 @@ public class EmployeeController {
 
         // 3. 生成 JWT（先略过，第六阶段做）
         // TODO
+        Map<String, Object> claims = new HashMap<>();
+        claims.put(JwtClaimsConstant.EMP_ID, employee.getId());
+        String token = JwtUtil.createJWT(
+                jwtProperties.getAdminSecretKey(),
+                jwtProperties.getAdminTtl(),
+                claims);
 
 
         // 4. 组装 EmployeeLoginVO 返回
