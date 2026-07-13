@@ -1,8 +1,11 @@
 package com.homelander.mapper;
 
+import com.github.pagehelper.Page;
 import com.homelander.annotation.AutoFill;
+import com.homelander.dto.SetmealPageQueryDTO;
 import com.homelander.entity.Setmeal;
 import com.homelander.enumeration.OperationType;
+import com.homelander.vo.SetmealVO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
@@ -23,4 +26,11 @@ public interface SetmealMapper {
      */
     @AutoFill(value = OperationType.INSERT)
     void insert(Setmeal setmeal);
+
+    /**
+     * 动态分页查询
+     * @param setmealPageQueryDTO
+     * @return
+     */
+    Page<SetmealVO> pageQuery(SetmealPageQueryDTO setmealPageQueryDTO);
 }

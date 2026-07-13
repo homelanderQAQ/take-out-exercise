@@ -19,5 +19,9 @@ import java.io.Serializable;
 @AllArgsConstructor
 @NoArgsConstructor
 public class SetmealPageQueryDTO implements Serializable {
-
+    private Integer page;
+    private Integer pageSize;
+    private String name; // 套餐名称
+    private Long categoryId; // 分类
+    private Integer status;
 }

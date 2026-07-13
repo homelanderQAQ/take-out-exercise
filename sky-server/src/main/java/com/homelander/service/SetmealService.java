@@ -1,6 +1,8 @@
 package com.homelander.service;
 
 import com.homelander.dto.SetMealDto;
+import com.homelander.dto.SetmealPageQueryDTO;
+import com.homelander.result.PageResult;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -20,4 +22,11 @@ public interface SetmealService {
      * @param setMealDto
      */
     void saveWithDish(SetMealDto setMealDto);
+
+    /**
+     * 分页查询服务层代码
+     * @param setmealPageQueryDTO
+     * @return
+     */
+    PageResult pageQuery(SetmealPageQueryDTO setmealPageQueryDTO);
 }

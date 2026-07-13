@@ -1,12 +1,17 @@
 package com.homelander.service.impl;
 
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import com.homelander.dto.SetMealDto;
+import com.homelander.dto.SetmealPageQueryDTO;
 import com.homelander.entity.Setmeal;
 import com.homelander.entity.SetmealDish;
 import com.homelander.mapper.SetmealDishMapper;
 import com.homelander.mapper.SetmealMapper;
+import com.homelander.result.PageResult;
 import com.homelander.result.Result;
 import com.homelander.service.SetmealService;
+import com.homelander.vo.SetmealVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,5 +61,19 @@ public class SetmealServiceImpl implements SetmealService {
             }
             setmealDishMapper.insertBatch(setmealDishes); // 批量插入
         }
+    }
+
+    /**
+     * 分页查询
+     * @param setmealPageQueryDTO
+     * @return
+     */
+    @Override
+    public PageResult pageQuery(SetmealPageQueryDTO setmealPageQueryDTO) {
+        PageHelper.startPage(setmealPageQueryDTO.getPage(),setmealPageQueryDTO.getPageSize());
+
+        Page<SetmealVO> setmealVOPage =  setmealMapper.pageQuery(setmealPageQueryDTO);
+
+        return new PageResult(setmealVOPage.getTotal(),setmealVOPage.getResult());
     }
 }

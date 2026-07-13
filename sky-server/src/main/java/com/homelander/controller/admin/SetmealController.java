@@ -1,6 +1,8 @@
 package com.homelander.controller.admin;
 
 import com.homelander.dto.SetMealDto;
+import com.homelander.dto.SetmealPageQueryDTO;
+import com.homelander.result.PageResult;
 import com.homelander.result.Result;
 import com.homelander.service.SetmealService;
 import io.swagger.annotations.Api;
@@ -38,5 +40,16 @@ public class SetmealController {
         log.info("新增套餐:{}",setMealDto);
         setmealService.saveWithDish(setMealDto);
         return Result.success();
+    }
+
+    /**
+     * 分页查询
+     * @param setmealPageQueryDTO
+     * @return
+     */
+    public Result<PageResult> page(SetmealPageQueryDTO setmealPageQueryDTO){
+        log.info("分页查询：{}",setmealPageQueryDTO);
+        PageResult pageResult = setmealService.pageQuery(setmealPageQueryDTO);
+        return Result.success(pageResult);
     }
 }
