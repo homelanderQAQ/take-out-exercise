@@ -21,4 +21,5 @@ public class MessageConstant {
     public static final String CATEGORY_BE_RELATED_BY_DISH = "目录已被菜品关联";
     public static final String CATEGORY_BE_RELATED_BY_SETMEAL = "种类被套餐关联";
     public static final String SETMEAL_ON_SALE = "套餐在售";
+    public static final String SETMEAL_ENABLE_FAILED = "套餐内包含未启售菜品，无法启售";
 }

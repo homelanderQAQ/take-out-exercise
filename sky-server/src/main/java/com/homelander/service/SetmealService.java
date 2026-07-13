@@ -51,4 +51,6 @@ public interface SetmealService {
      * @return
      */
     SetmealVO getById(Long id);
+
+    void startOrStop(Integer status, Long id);
 }
