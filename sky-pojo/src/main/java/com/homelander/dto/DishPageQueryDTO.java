@@ -19,8 +19,8 @@ import java.io.Serializable;
 @AllArgsConstructor
 @NoArgsConstructor
 public class DishPageQueryDTO implements Serializable {
-    private int page;
-    private int pageSize;
+    private Integer page;
+    private Integer pageSize;
     private String name;
     private Integer categoryId;
     private Integer status;

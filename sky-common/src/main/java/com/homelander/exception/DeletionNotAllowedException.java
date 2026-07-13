@@ -9,7 +9,7 @@ package com.homelander.exception;
  * @Create 2026/7/12 13:33
  * @Version 1.0
  */
-public class DeletionNotAllowedException extends RuntimeException {
+public class DeletionNotAllowedException extends BaseException {
     public DeletionNotAllowedException() {
     }
 

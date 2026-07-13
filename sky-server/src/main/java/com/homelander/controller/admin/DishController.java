@@ -2,6 +2,7 @@ package com.homelander.controller.admin;
 
 import com.homelander.dto.DishDTO;
 import com.homelander.dto.DishPageQueryDTO;
+import com.homelander.entity.Dish;
 import com.homelander.result.PageResult;
 import com.homelander.result.Result;
 import com.homelander.service.DishService;
@@ -84,9 +85,23 @@ public class DishController {
      * @param dishDTO
      * @return
      */
+    @PutMapping
     public Result update(@RequestBody DishDTO dishDTO){
         log.info("修改菜单：{}",dishDTO);
         dishService.updateWithFlavor(dishDTO);
         return Result.success();
+    }
+
+
+    /**
+     * 根据分类id查询菜品
+     * @param categoryId
+     * @return
+     */
+    @GetMapping("/list")
+    public Result<List<Dish>> list(Long categoryId){
+        log.info("分类的id是：{}",categoryId);
+        List<Dish> list =dishService.list(categoryId);
+        return Result.success(list);
     }
 }

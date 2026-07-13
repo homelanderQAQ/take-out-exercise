@@ -1,5 +1,8 @@
 package com.homelander.mapper;
 
+import com.homelander.annotation.AutoFill;
+import com.homelander.entity.SetmealDish;
+import com.homelander.enumeration.OperationType;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -22,4 +25,11 @@ public interface SetmealDishMapper {
      * @return
      */
     List<Long> getSetmealIdsByDishIds(List<Long> dishIds);
+
+    /**
+     * 插入菜品
+     * @param setmealDishes
+     */
+    @AutoFill(value = OperationType.INSERT)
+    void insertBatch(List<SetmealDish> setmealDishes);
 }

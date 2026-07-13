@@ -2,6 +2,7 @@ package com.homelander.service;
 
 import com.homelander.dto.DishDTO;
 import com.homelander.dto.DishPageQueryDTO;
+import com.homelander.entity.Dish;
 import com.homelander.result.PageResult;
 import com.homelander.vo.DishVO;
 
@@ -48,4 +49,11 @@ public interface DishService {
      * @param dishDTO
      */
     void updateWithFlavor(DishDTO dishDTO);
+
+    /**
+     * 根据分类id查询菜品
+     * @param categoryId
+     * @return
+     */
+    List<Dish> list(Long categoryId);
 }

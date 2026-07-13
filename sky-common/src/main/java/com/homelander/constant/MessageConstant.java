@@ -18,4 +18,6 @@ public class MessageConstant {
 
     public static final String DISH_NO_SALE = "菜品在售";
     public static final String DISH_BE_RELATED_BY_SETMEAL = "菜品已被套餐关联";
+    public static final String CATEGORY_BE_RELATED_BY_DISH = "目录已被菜品关联";
+    public static final String CATEGORY_BE_RELATED_BY_SETMEAL = "种类被套餐关联";
 }
