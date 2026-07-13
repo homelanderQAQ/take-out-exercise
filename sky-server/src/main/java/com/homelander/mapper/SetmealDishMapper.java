@@ -5,6 +5,7 @@ import com.homelander.entity.SetmealDish;
 import com.homelander.enumeration.OperationType;
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
 
@@ -35,9 +36,12 @@ public interface SetmealDishMapper {
     void insertBatch(List<SetmealDish> setmealDishes);
 
     /**
-     * 根据套餐id删除套餐和菜品的关联关系
+     * 根据套餐id删除关联的菜品
      * @param setmealId
      */
     @Delete("delete from setmeal_dish where setmeal_id = #{setmealId}")
-    void deleteById(Long setmealId);
+    void deleteBySetmealId(Long setmealId);
+
+    @Select("select * from setmeal_dish where setmeal_id =#{setmealId}")
+    List<SetmealDish> getBySetmealId(Long setmealId);
 }

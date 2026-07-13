@@ -3,6 +3,7 @@ package com.homelander.service;
 import com.homelander.dto.SetMealDto;
 import com.homelander.dto.SetmealPageQueryDTO;
 import com.homelander.result.PageResult;
+import com.homelander.vo.SetmealVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -37,4 +38,17 @@ public interface SetmealService {
      * @param ids
      */
     void deleteBatch(List<Long> ids);
+
+    /***
+     * 修改套餐
+     * @param setMealDto
+     */
+    void updateWithDish(SetMealDto setMealDto);
+
+    /**
+     * 根据id查找套餐
+     * @param id
+     * @return
+     */
+    SetmealVO getById(Long id);
 }

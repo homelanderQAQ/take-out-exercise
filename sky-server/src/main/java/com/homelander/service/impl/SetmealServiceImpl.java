@@ -6,6 +6,7 @@ import com.homelander.constant.MessageConstant;
 import com.homelander.constant.StatusConstant;
 import com.homelander.dto.SetMealDto;
 import com.homelander.dto.SetmealPageQueryDTO;
+import com.homelander.entity.Dish;
 import com.homelander.entity.Setmeal;
 import com.homelander.entity.SetmealDish;
 import com.homelander.exception.DeletionNotAllowedException;
@@ -19,6 +20,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -95,7 +97,50 @@ public class SetmealServiceImpl implements SetmealService {
         });
         ids.forEach(setmealId ->{
             setmealMapper.deleteById(setmealId);  // 删除套餐
-            setmealDishMapper.deleteById(setmealId); // 删除菜品
+            setmealDishMapper.deleteBySetmealId(setmealId); // 删除菜品
         });
+    }
+
+    /**
+     * 修改套餐
+     * @param setMealDto
+     */
+    @Transactional
+    @Override
+    public void updateWithDish(SetMealDto setMealDto) {
+        Setmeal setmeal = new Setmeal();
+        BeanUtils.copyProperties(setMealDto,setmeal);
+
+        setmealMapper.update(setmeal);
+
+        Long setmealId = setmeal.getId();
+        setmealDishMapper.deleteBySetmealId(setmealId);
+
+        // 取出菜品
+        List<SetmealDish> setmealDishes = setMealDto.getSetmealDishes();
+        setmealDishes.forEach(setmealDish -> {
+            setmealDish.setSetmealId(setmealId);
+        });
+        // 重新插入套餐和菜品的关联关系
+        setmealDishMapper.insertBatch(setmealDishes);
+    }
+
+    /**
+     * 根据id查找套餐
+     * @param id
+     * @return
+     */
+    @Override
+    public SetmealVO getById(Long id) {
+        Setmeal setmeal = setmealMapper.getById(id);
+
+        List<SetmealDish> setmealDishes =  setmealDishMapper.getBySetmealId(id);
+
+        SetmealVO setmealVO = new SetmealVO();
+
+        BeanUtils.copyProperties(setmeal,setmealVO);
+        setmealVO.setSetmealDishes(setmealDishes);
+
+        return setmealVO;
     }
 }

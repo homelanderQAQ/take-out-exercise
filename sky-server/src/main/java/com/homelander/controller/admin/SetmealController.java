@@ -5,6 +5,7 @@ import com.homelander.dto.SetmealPageQueryDTO;
 import com.homelander.result.PageResult;
 import com.homelander.result.Result;
 import com.homelander.service.SetmealService;
+import com.homelander.vo.SetmealVO;
 import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,5 +64,23 @@ public class SetmealController {
         log.info("删除菜品的ids：{}",ids);
         setmealService.deleteBatch(ids);
         return Result.success();
+    }
+
+    /**
+     * 修改套餐
+     * @param setMealDto
+     * @return
+     */
+    public Result update (@RequestBody SetMealDto setMealDto){
+        log.info("修改的套餐:{}",setMealDto);
+        setmealService.updateWithDish(setMealDto);
+        return Result.success();
+    }
+
+    @GetMapping("/{id}")
+    public Result<SetmealVO> getById(@PathVariable Long id){
+        log.info("要查找的套餐id：{}",id);
+        SetmealVO setmealVO = setmealService.getById(id);
+        return Result.success(setmealVO);
     }
 }

@@ -122,7 +122,7 @@ public class DishServiceImpl implements DishService {
     }
 
     /**
-     * 根据id获取菜品信息
+     * 根据id获取菜品信息 用于修改页面回显数据
      * @param id
      * @return
      */

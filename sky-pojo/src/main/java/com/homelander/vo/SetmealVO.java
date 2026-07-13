@@ -1,6 +1,7 @@
 package com.homelander.vo;
 
 import com.homelander.entity.Dish;
+import com.homelander.entity.SetmealDish;
 import jdk.jfr.BooleanFlag;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -36,5 +37,5 @@ public class SetmealVO implements Serializable {
     private String image;
     private LocalDateTime updateTime;
     private String categoryName;
-    private List<Dish> dishes = new ArrayList<>();
+    private List<SetmealDish> setmealDishes = new ArrayList<>();
 }
