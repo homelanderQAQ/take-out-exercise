@@ -2,10 +2,13 @@ package com.homelander.service.impl;
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import com.homelander.constant.MessageConstant;
+import com.homelander.constant.StatusConstant;
 import com.homelander.dto.SetMealDto;
 import com.homelander.dto.SetmealPageQueryDTO;
 import com.homelander.entity.Setmeal;
 import com.homelander.entity.SetmealDish;
+import com.homelander.exception.DeletionNotAllowedException;
 import com.homelander.mapper.SetmealDishMapper;
 import com.homelander.mapper.SetmealMapper;
 import com.homelander.result.PageResult;
@@ -75,5 +78,24 @@ public class SetmealServiceImpl implements SetmealService {
         Page<SetmealVO> setmealVOPage =  setmealMapper.pageQuery(setmealPageQueryDTO);
 
         return new PageResult(setmealVOPage.getTotal(),setmealVOPage.getResult());
+    }
+
+    /**
+     * 批量删除
+     * @param ids
+     */
+    @Override
+    public void deleteBatch(List<Long> ids) {
+        //起售中的套餐不能删除
+        ids.forEach(id->{
+            Setmeal setmeal =  setmealMapper.getById(id);
+            if (setmeal.getStatus() == StatusConstant.ENABLE){
+                throw new DeletionNotAllowedException(MessageConstant.SETMEAL_ON_SALE);
+            }
+        });
+        ids.forEach(setmealId ->{
+            setmealMapper.deleteById(setmealId);  // 删除套餐
+            setmealDishMapper.deleteById(setmealId); // 删除菜品
+        });
     }
 }

@@ -8,10 +8,9 @@ import com.homelander.service.SetmealService;
 import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * ClassName:SetmealController
@@ -47,9 +46,22 @@ public class SetmealController {
      * @param setmealPageQueryDTO
      * @return
      */
+    @GetMapping("/page")
     public Result<PageResult> page(SetmealPageQueryDTO setmealPageQueryDTO){
         log.info("分页查询：{}",setmealPageQueryDTO);
         PageResult pageResult = setmealService.pageQuery(setmealPageQueryDTO);
         return Result.success(pageResult);
+    }
+
+    /**
+     * 批量删除套餐
+     * @param ids
+     * @return
+     */
+    @DeleteMapping
+    public Result deltet(@RequestParam List<Long> ids){
+        log.info("删除菜品的ids：{}",ids);
+        setmealService.deleteBatch(ids);
+        return Result.success();
     }
 }

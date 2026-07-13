@@ -6,6 +6,7 @@ import com.homelander.dto.SetmealPageQueryDTO;
 import com.homelander.entity.Setmeal;
 import com.homelander.enumeration.OperationType;
 import com.homelander.vo.SetmealVO;
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
@@ -33,4 +34,10 @@ public interface SetmealMapper {
      * @return
      */
     Page<SetmealVO> pageQuery(SetmealPageQueryDTO setmealPageQueryDTO);
+
+    @Select("select * from setmeal where id =#{id}")
+    Setmeal getById(Long id);
+
+    @Delete("delete from dish where id = #{setmealId}")
+    void deleteById(Long setmealId);
 }
